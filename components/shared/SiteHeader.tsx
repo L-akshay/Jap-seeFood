@@ -6,7 +6,7 @@ import { NAV_LINKS, SITE } from "@/lib/constants";
 
 export function SiteHeader() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050814]/88 backdrop-blur-2xl">
+    <header className="sticky inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050814] shadow-[0_18px_50px_-36px_rgba(2,6,23,0.95)]">
       <div className="container-narrow flex min-h-16 items-center gap-4 px-5 py-2.5 sm:px-8">
         <Link href="/" className="group flex items-center gap-3" aria-label="海宝 ホーム">
           <span className="flex size-10 items-center justify-center rounded-lg border border-gold/35 bg-gold/10 text-gold shadow-[0_0_24px_-12px_rgba(214,168,79,0.9)]">

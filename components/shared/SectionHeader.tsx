@@ -34,7 +34,7 @@ export function SectionHeader({
         </span>
       ) : null}
 
-      <h2 className="text-balance text-4xl leading-[1.1] text-pearl md:text-5xl">
+      <h2 className="text-balance text-4xl leading-[1.2] text-pearl md:text-5xl">
         {title}
       </h2>
 

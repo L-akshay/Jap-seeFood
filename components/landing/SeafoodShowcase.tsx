@@ -73,22 +73,22 @@ export function SeafoodShowcase() {
 
             timeline
               .to(
+                copies[index - 1],
+                {
+                  autoAlpha: 0,
+                  y: -18,
+                  duration: 0.18,
+                  ease: "power2.inOut",
+                },
+                index - 0.5,
+              )
+              .to(
                 panels[index - 1],
                 {
                   autoAlpha: 0,
                   yPercent: -6,
                   scale: 0.98,
                   duration: 0.42,
-                  ease: "power2.inOut",
-                },
-                index - 0.45,
-              )
-              .to(
-                copies[index - 1],
-                {
-                  autoAlpha: 0,
-                  y: -22,
-                  duration: 0.28,
                   ease: "power2.inOut",
                 },
                 index - 0.45,
@@ -111,10 +111,10 @@ export function SeafoodShowcase() {
                 {
                   autoAlpha: 1,
                   y: 0,
-                  duration: 0.42,
+                  duration: 0.34,
                   ease: "power2.out",
                 },
-                index - 0.12,
+                index - 0.02,
               )
               .to(
                 marks,
@@ -222,7 +222,7 @@ function DesktopPanel({ item, index }: { item: SeafoodItem; index: number }) {
           <span className="mt-6 block font-jp text-3xl text-pearl/78">
             {item.nameJp}
           </span>
-          <h3 className="mt-4 font-jp text-6xl leading-[1.05] text-pearl xl:text-7xl">
+          <h3 className="mt-4 font-jp text-6xl leading-[1.14] text-pearl xl:text-7xl">
             {item.name}
           </h3>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-soft-blue/86">

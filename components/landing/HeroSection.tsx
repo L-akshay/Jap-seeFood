@@ -107,7 +107,7 @@ export function HeroSection() {
             </span>
           </motion.div>
 
-          <h1 className="mt-6 font-jp text-4xl leading-[1.12] text-pearl sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-jp text-4xl leading-[1.2] text-pearl sm:text-5xl md:text-6xl lg:text-7xl">
             <MaskLine delay={0.3}>日本の上質な海の恵みを、</MaskLine>
             <MaskLine delay={0.45}>
               <span className="text-gold-gradient">世界の食卓へ。</span>
@@ -184,7 +184,7 @@ function MaskLine({
   delay: number;
 }) {
   return (
-    <span className="block overflow-hidden pb-1">
+    <span className="mb-3 block overflow-hidden pb-1">
       <motion.span
         className="block"
         initial={{ y: "115%" }}
