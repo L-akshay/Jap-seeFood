@@ -1,26 +1,359 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ */
+/*  Brand design tokens                                                */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Raw brand palette */
+  --brand-background: #020617;
+  --brand-navy: #061826;
+  --brand-gold: #d6a84f;
+  --brand-gold-muted: #a77d35;
+  --brand-pearl: #f8fafc;
+  --brand-soft-blue: #d9edf7;
+  --brand-red: #c1121f;
 }
 
 @theme inline {
+  /* Brand color utilities → bg-gold, text-pearl, border-navy, etc. */
+  --color-brand: var(--brand-background);
+  --color-navy: var(--brand-navy);
+  --color-gold: var(--brand-gold);
+  --color-gold-muted: var(--brand-gold-muted);
+  --color-pearl: var(--brand-pearl);
+  --color-soft-blue: var(--brand-soft-blue);
+  --color-red-accent: var(--brand-red);
+
+  /* shadcn semantic tokens */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-body);
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+  --font-jp: var(--font-jp);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ------------------------------------------------------------------ */
+/*  Dark theme is the default — this landing is dark-only.             */
+/*  :root and .dark resolve to the same brand-aware values.            */
+/* ------------------------------------------------------------------ */
+:root,
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  --card: #061826;
+  --card-foreground: #f8fafc;
+  --popover: #061826;
+  --popover-foreground: #f8fafc;
+
+  --primary: #d6a84f;
+  --primary-foreground: #020617;
+  --secondary: #0c2236;
+  --secondary-foreground: #f8fafc;
+
+  --muted: #0c2236;
+  --muted-foreground: #94a8b8;
+  --accent: #a77d35;
+  --accent-foreground: #f8fafc;
+
+  --destructive: #c1121f;
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: #d6a84f;
+
+  --chart-1: #d6a84f;
+  --chart-2: #a77d35;
+  --chart-3: #d9edf7;
+  --chart-4: #061826;
+  --chart-5: #c1121f;
+
+  --radius: 0.625rem;
+
+  --sidebar: #061826;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-primary: #d6a84f;
+  --sidebar-primary-foreground: #020617;
+  --sidebar-accent: #0c2236;
+  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: #d6a84f;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-body scroll-smooth;
+    scroll-padding-top: 5.5rem;
+    /* Smooth, premium font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Subtle background radial gradients layered over the dark base */
+    background-color: var(--brand-background);
+    background-image:
+      radial-gradient(
+        60rem 60rem at 15% -10%,
+        rgba(214, 168, 79, 0.08),
+        transparent 60%
+      ),
+      radial-gradient(
+        50rem 50rem at 100% 0%,
+        rgba(217, 237, 247, 0.06),
+        transparent 55%
+      ),
+      radial-gradient(
+        70rem 70rem at 50% 120%,
+        rgba(6, 24, 38, 0.9),
+        transparent 60%
+      );
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-heading tracking-tight;
+  }
+
+  /* Premium text selection */
+  ::selection {
+    background-color: var(--brand-gold);
+    color: var(--brand-background);
+  }
+
+  /* Refined dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--brand-background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--brand-gold-muted);
+    border-radius: 9999px;
+    border: 2px solid var(--brand-background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-gold);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------ */
+/*  Reusable utility classes                                           */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Section vertical rhythm + centered max width */
+  .section {
+    @apply relative w-full px-6 py-24 sm:px-8 md:py-32;
+  }
+
+  .container-narrow {
+    @apply mx-auto w-full max-w-7xl;
+  }
+
+  /* Thin gold border with a soft inner glow */
+  .gold-border {
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 35%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--brand-gold) 8%, transparent),
+      inset 0 0 24px color-mix(in srgb, var(--brand-gold) 6%, transparent);
+  }
+
+  /* Frosted glass card on the dark navy base */
+  .glass-card {
+    background: linear-gradient(
+      160deg,
+      rgba(248, 250, 252, 0.06),
+      rgba(6, 24, 38, 0.4)
+    );
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(248, 250, 252, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow:
+      0 1px 0 0 rgba(248, 250, 252, 0.04) inset,
+      0 24px 60px -28px rgba(2, 6, 23, 0.9);
+    transition:
+      border-color 0.4s ease,
+      box-shadow 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  .glass-card:hover {
+    border-color: color-mix(in srgb, var(--brand-gold) 45%, transparent);
+    box-shadow:
+      0 1px 0 0 rgba(248, 250, 252, 0.06) inset,
+      0 30px 70px -26px rgba(2, 6, 23, 0.95),
+      0 0 0 1px color-mix(in srgb, var(--brand-gold) 12%, transparent);
+  }
+
+  /* Gold gradient text for accents/headlines */
+  .text-gold-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--brand-gold-muted),
+      var(--brand-gold),
+      var(--brand-pearl)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Premium fallback shown beneath images — degrades gracefully if an
+     asset is missing instead of leaving a blank/broken box. */
+  .img-fallback {
+    background-image:
+      radial-gradient(
+        24rem 24rem at 70% 20%,
+        color-mix(in srgb, var(--brand-gold) 18%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(150deg, var(--brand-navy), var(--brand-background) 70%);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Background decoration layers (used by <Background />)            */
+  /* ---------------------------------------------------------------- */
+
+  /* Fine film grain / ocean noise — fractal-noise SVG, blended over the base */
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+  }
+
+  /* Soft wave-line pattern drawn with pseudo elements (no markup needed) */
+  .wave-lines::before,
+  .wave-lines::after {
+    content: "";
+    position: absolute;
+    inset-inline: -10%;
+    height: 60%;
+    background-image: repeating-radial-gradient(
+      circle at 50% 100%,
+      transparent 0,
+      transparent 38px,
+      color-mix(in srgb, var(--brand-soft-blue) 14%, transparent) 39px,
+      transparent 40px
+    );
+    background-size: 100% 100%;
+    -webkit-mask-image: linear-gradient(to top, black, transparent);
+    mask-image: linear-gradient(to top, black, transparent);
+    opacity: 0.4;
+  }
+
+  .wave-lines::before {
+    top: -10%;
+    transform: scaleY(-1);
+    opacity: 0.25;
+    animation: wave-drift-top 17s ease-in-out infinite;
+  }
+
+  .wave-lines::after {
+    bottom: -10%;
+    animation: wave-drift-bottom 14s ease-in-out infinite;
+  }
+}
+
+/* Gentle wave texture movement — slow, GPU-cheap transforms */
+@keyframes wave-drift-bottom {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wave-drift-top {
+  0%,
+  100% {
+    transform: scaleY(-1) translateY(0);
+  }
+  50% {
+    transform: scaleY(-1) translateY(-8px);
+  }
+}
+
+/* Skip the wave animation on small screens to keep mobile light */
+@media (max-width: 768px) {
+  .wave-lines::before,
+  .wave-lines::after {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Accessibility — honour prefers-reduced-motion globally             */
+/*  (Motion's <MotionConfig reducedMotion="user"> covers JS animation; */
+/*   this neutralises CSS animations/transitions and smooth scroll.)   */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
